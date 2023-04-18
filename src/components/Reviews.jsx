@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import * as api from "../api.js";
 import { Row, Col } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Reviews() {
+  const [isLoading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     api.getReviews().then((data) => {
       setReviews(data.reviews);
+      setIsLoading(false);
     });
   }, []);
 
+  if (isLoading) {
+    return <LoadingOutlined style={{ fontSize: 96 }} spin />;
+  }
   return (
     <Row>
       {reviews.map(({ review_id, title, review_img_url, owner, votes }) => {
