@@ -8,6 +8,7 @@ import { HeartOutlined } from "@ant-design/icons";
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsLoading(true);
     api.getReviews().then((data) => {

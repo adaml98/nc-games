@@ -9,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       <Routes>
         <Route path="/" element={<Reviews />} />
         <Route path="/reviews/:review_id" element={<Review />} />
