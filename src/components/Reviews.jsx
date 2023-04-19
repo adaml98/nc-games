@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as api from "../api.js";
 import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
@@ -14,7 +15,6 @@ export default function Reviews() {
       setIsLoading(false);
     });
   }, []);
-
   if (isLoading) {
     return (
       <>

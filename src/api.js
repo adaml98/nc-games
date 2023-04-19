@@ -7,3 +7,11 @@ export const getReviews = () => {
       return res.data;
     });
 };
+
+export const getReview = (review_id) => {
+  return axios
+    .get(`https://nc-be-games.onrender.com/api/reviews/${review_id}`)
+    .then((res) => {
+      return res.data;
+    });
+};
