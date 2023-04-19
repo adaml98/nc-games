@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import * as api from "../api.js";
 import { Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { HeartOutlined } from "@ant-design/icons";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
@@ -37,11 +35,7 @@ export default function Reviews() {
             </Link>
             <img src={review_img_url} alt="Board game" className="reviews" />
             <h3>Author: {owner}</h3>
-            <div class="heart">
-              <HeartOutlined />
-              <br />
-              {votes}
-            </div>
+            <p>Likes:{votes}</p>
           </Col>
         );
       })}

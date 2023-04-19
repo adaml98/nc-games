@@ -1,7 +1,3 @@
-export default function Header() {
-  return (
-    <header>
-      <h1>NC Games</h1>
-    </header>
-  );
+export default function Header(){
+    return <h1>NC Games App</h1>
 }
