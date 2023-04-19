@@ -5,8 +5,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { HeartOutlined } from "@ant-design/icons";
 
-export default function Reviews({ isLoading, setIsLoading }) {
+export default function Reviews() {
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setIsLoading(true);
     api.getReviews().then((data) => {
@@ -20,6 +21,8 @@ export default function Reviews({ isLoading, setIsLoading }) {
       <>
         <br />
         <LoadingOutlined style={{ fontSize: 96 }} spin />
+        <br />
+        <br />
       </>
     );
   }
@@ -28,10 +31,10 @@ export default function Reviews({ isLoading, setIsLoading }) {
       {reviews.map(({ review_id, title, review_img_url, owner, votes }) => {
         return (
           <Col key={review_id} xs={24} xl={12}>
-            <Link to={`${review_id}`} preventScrollReset={true}>
+            <Link to={`reviews/${review_id}`} preventScrollReset={true}>
               <h2>{title}</h2>
             </Link>
-            <img src={review_img_url} alt="Board game" class="reviews" />
+            <img src={review_img_url} alt="Board game" className="reviews" />
             <h3>Author: {owner}</h3>
             <div class="heart">
               <HeartOutlined />
