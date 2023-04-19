@@ -15,3 +15,11 @@ export const getReview = (review_id) => {
       return res.data;
     });
 };
+
+export const getComments = (review_id) => {
+  return axios
+    .get(`https://nc-be-games.onrender.com/api/reviews/${review_id}/comments`)
+    .then((res) => {
+      return res.data;
+    });
+};
