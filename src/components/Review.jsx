@@ -3,6 +3,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import * as api from "../api.js";
 import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Layout, Col } from "antd";
+import Comments from "./Comments.jsx";
 
 const { Content } = Layout;
 
@@ -41,7 +42,6 @@ export default function Review() {
       </>
     );
   }
-
   return (
     <Layout className="layout">
       <Content style={{ padding: "0 10%" }}>
@@ -65,9 +65,9 @@ export default function Review() {
             <p>{review_body}</p>
             <p>Author: {owner}</p>
             <p>Votes: {votes}</p>
-            <p>Comments:{comment_count}</p>
           </Col>
         </div>
+        <Comments comment_count={comment_count} />
       </Content>
     </Layout>
   );
