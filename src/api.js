@@ -2,7 +2,6 @@ import axios from "axios";
 
 const renderClient = axios.create({
   baseURL: "https://nc-be-games.onrender.com/api/",
-  timeout: 1000,
 });
 
 export const getReviews = () => {
@@ -21,4 +20,12 @@ export const getComments = (review_id) => {
   return renderClient.get(`reviews/${review_id}/comments`).then((res) => {
     return res.data;
   });
+};
+
+export const patchVotes = (review_id) => {
+  return renderClient
+    .patch(`reviews/${review_id}`, { inc_votes: 1 })
+    .then((res) => {
+      return res.data;
+    });
 };
