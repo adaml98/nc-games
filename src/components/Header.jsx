@@ -1,3 +1,8 @@
-export default function Header(){
-    return <h1>NC Games App</h1>
+export default function Header({ user }) {
+  return (
+    <header>
+      <h1>NC Games App</h1>
+      <p>Logged in as: {user}</p>
+    </header>
+  );
 }

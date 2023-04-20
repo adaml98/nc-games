@@ -15,3 +15,9 @@ code {
 img {
   width: 80%;
 }
+
+header {
+  background-color: #95de64;
+  margin: 0;
+  padding: 10px;
+}

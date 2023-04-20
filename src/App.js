@@ -5,15 +5,17 @@ import Reviews from "./components/Reviews";
 import Review from "./components/Review";
 import Error from "./components/Error";
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const [user, setUser] = useState("grumpy19");
   return (
     <div className="App">
-      <Header />
+      <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="*" element={<Error />} />
-        <Route path="/" element={<Reviews />} />
-        <Route path="/reviews/:review_id" element={<Review />} />
+        <Route path="/" element={<Reviews user={user} />} />
+        <Route path="/reviews/:review_id" element={<Review />} user={user} />
       </Routes>
       <Footer />
     </div>
