@@ -5,7 +5,6 @@ import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Layout, Col, Space } from "antd";
 import Comments from "./Comments.jsx";
 import Likes from "./Likes.jsx";
-import Error from "./Error.jsx";
 
 const { Content } = Layout;
 
@@ -25,7 +24,6 @@ export default function Review() {
   ] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { review_id } = useParams();
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,8 +42,6 @@ export default function Review() {
       </>
     );
   }
-
-  if (error) return <Error message={error} />;
 
   return (
     <Layout className="layout">
@@ -76,7 +72,7 @@ export default function Review() {
               <p>Designer: {designer}</p>
               <p>{review_body}</p>
               <p>Author: {owner}</p>
-              <Likes review_id={review_id} votes={votes} setError={setError} />
+              <Likes review_id={review_id} votes={votes} />
             </Col>
           </div>
           <Comments comment_count={comment_count} />
