@@ -31,6 +31,5 @@ export const postComment = async (review_id, postedComment, user) => {
     username: user,
     body: postedComment,
   });
-  console.log(res);
   return res.data;
 };
