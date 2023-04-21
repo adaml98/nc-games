@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+
 import { LoadingOutlined } from "@ant-design/icons";
 import * as api from "../api.js";
 import { useParams, Link } from "react-router-dom";
-import { Breadcrumb, Layout, Col, Space } from "antd";
+import { Breadcrumb, Layout, Col, Space, Typography, Collapse } from "antd";
 import Comments from "./Comments.jsx";
 import Likes from "./Likes.jsx";
 
 const { Content } = Layout;
+const { Paragraph } = Typography;
+const { Panel } = Collapse;
 
-export default function Review() {
+export default function Review({ user }) {
   const [
     {
       title,
@@ -42,7 +45,6 @@ export default function Review() {
       </>
     );
   }
-
   return (
     <Layout className="layout">
       <Content style={{ padding: "0 10%" }}>
@@ -68,14 +70,22 @@ export default function Review() {
             <Col span={24}>
               <h2>{title}</h2>
               <img src={review_img_url} alt="Board game" className="review" />
-              <p>Created at: {created_at}</p>
               <p>Designer: {designer}</p>
-              <p>{review_body}</p>
-              <p>Author: {owner}</p>
+              <Paragraph style={{ textAlign: "left" }}>
+                <pre>{review_body}</pre>
+                <pre style={{ textAlign: "left" }}>
+                  Created at: {created_at} <br />
+                  Author: {owner}
+                </pre>
+              </Paragraph>
               <Likes review_id={review_id} votes={votes} />
             </Col>
           </div>
-          <Comments comment_count={comment_count} />
+          <Collapse defaultActiveKey={["1"]}>
+            <Panel header={`Comments: ${comment_count}`} key="0">
+              <Comments user={user} />
+            </Panel>
+          </Collapse>
         </Space>
       </Content>
     </Layout>
