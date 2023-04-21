@@ -4,8 +4,13 @@ const renderClient = axios.create({
   baseURL: "https://nc-be-games.onrender.com/api/",
 });
 
-export const getReviews = async () => {
-  const res = await renderClient.get("reviews");
+export const getReviews = async (category) => {
+  const res = await renderClient.get("reviews", {
+    params: {
+      category: category,
+    },
+  });
+
   return res.data;
 };
 
@@ -31,5 +36,10 @@ export const postComment = async (review_id, postedComment, user) => {
     username: user,
     body: postedComment,
   });
+  return res.data;
+};
+
+export const getCategories = async () => {
+  const res = await renderClient.get("categories");
   return res.data;
 };
