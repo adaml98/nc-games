@@ -4,19 +4,23 @@ import { Row, Col } from "antd";
 import { LoadingOutlined, HeartTwoTone } from "@ant-design/icons";
 import { Link, useSearchParams } from "react-router-dom";
 import Categories from "./Categories.jsx";
+import SortReviews from "./SortReviews.jsx";
 
 export default function Reviews() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const category = searchParams.get("category");
+  const sort = searchParams.get("sort_by");
+  const order = searchParams.get("order");
+
   useEffect(() => {
     setIsLoading(true);
-    api.getReviews(category).then((data) => {
+    api.getReviews(category, sort, order).then((data) => {
       setReviews(data.reviews);
       setIsLoading(false);
     });
-  }, [category]);
+  }, [category, sort, order]);
 
   if (isLoading) {
     return (
@@ -28,6 +32,7 @@ export default function Reviews() {
       </>
     );
   }
+
   return (
     <>
       <Categories
@@ -35,6 +40,8 @@ export default function Reviews() {
         setSearchParams={setSearchParams}
         category={category}
       />
+      <br />
+      <SortReviews category={category} />
       <Row>
         {reviews.map(({ review_id, title, review_img_url, owner, votes }) => {
           return (

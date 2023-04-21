@@ -26,10 +26,11 @@ export default function PostComment({ user, setIsCommentPosted }) {
         form.resetFields();
       })
       .catch((err) => {
+        messageApi.destroy();
         messageApi.open({
           type: "error",
           content:
-            "We couldn't connect to NC Games. Make sure that you're connected to the Internet and try again.",
+            "Couldn't connect to NC Games. Make sure that you're connected to the Internet and try again.",
         });
       });
   };

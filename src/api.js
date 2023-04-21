@@ -4,13 +4,21 @@ const renderClient = axios.create({
   baseURL: "https://nc-be-games.onrender.com/api/",
 });
 
-export const getReviews = async (category) => {
-  const res = await renderClient.get("reviews", {
-    params: {
-      category: category,
-    },
-  });
-
+export const getReviews = async (category, sort, order) => {
+  category = category ? `category=${category}` : "";
+  sort = sort ? `sort_by=${sort}` : "";
+  order = order ? `order=${order}` : "";
+  const arr = [category, sort, order];
+  let query = `reviews`;
+  for (let i = 0; i < arr.length; i++) {
+    if (i === 0) {
+      query += "?" + arr[i];
+    } else {
+      query += "&" + arr[i];
+    }
+  }
+  //`reviews?${category}${sort}${order}`
+  const res = await renderClient.get(query);
   return res.data;
 };
 
