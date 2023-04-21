@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
-import { Collapse, Divider } from "antd";
+import { Divider, Typography } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import * as api from "../api.js";
 import { useParams } from "react-router-dom";
+import PostComment from "./PostComment.jsx";
 
-export default function Comments({ comment_count }) {
+const { Paragraph } = Typography;
+export default function Comments({ user }) {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const { review_id } = useParams();
-  const { Panel } = Collapse;
+  const [isCommentPosted, setIsCommentPosted] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     api.getComments(review_id).then((data) => {
       setComments(data.comments);
       setIsLoading(false);
+      setIsCommentPosted(false);
     });
-  }, [review_id]);
+  }, [review_id, isCommentPosted]);
 
   if (isLoading) {
     return (
@@ -29,23 +32,24 @@ export default function Comments({ comment_count }) {
   }
 
   return (
-    <Collapse defaultActiveKey={["1"]}>
-      <Panel header={`Comments: ${comment_count}`} key="0">
-        <>
-          {comments.map(({ comment_id, body, author, votes, created_at }) => {
-            return (
-              <li key={comment_id}>
-                <Divider style={{ borderBlock: "10px" }} orientation="left">
-                  {author}
-                </Divider>
-                <p>{created_at}</p>
-                <p>{body}</p>
-                <p>Likes: {votes}</p>
-              </li>
-            );
-          })}
-        </>
-      </Panel>
-    </Collapse>
+    <>
+      <PostComment user={user} setIsCommentPosted={setIsCommentPosted} />
+      {comments
+        .reverse()
+        .map(({ comment_id, body, author, votes, created_at }) => {
+          return (
+            <li key={comment_id} style={{ textAlign: "left" }}>
+              <Divider style={{ borderBlock: "10px" }} orientation="left">
+                {author}
+              </Divider>
+              <p>{created_at}</p>
+              <Paragraph>
+                <pre>{body}</pre>
+              </Paragraph>
+              <p>Likes: {votes}</p>
+            </li>
+          );
+        })}
+    </>
   );
 }
