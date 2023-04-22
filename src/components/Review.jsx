@@ -40,12 +40,10 @@ export default function Review({ user }) {
       })
       .catch((err) => {
         setError({ err });
-        // console.log(err.response.data.msg);
       });
   }, [review_id]);
 
   if (error) {
-    // console.log(error.err.response.data.msg);
     return <Error message={error.err.response.data.msg} />;
   }
   if (isLoading) {

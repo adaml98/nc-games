@@ -8,7 +8,9 @@ export const getReviews = async (category, sort, order) => {
   category = category ? `category=${category}` : "";
   sort = sort ? `sort_by=${sort}` : "";
   order = order ? `order=${order}` : "";
+
   const arr = [category, sort, order];
+
   let query = `reviews`;
   for (let i = 0; i < arr.length; i++) {
     if (i === 0) {
@@ -17,6 +19,7 @@ export const getReviews = async (category, sort, order) => {
       query += "&" + arr[i];
     }
   }
+
   const res = await renderClient.get(query);
   return res.data;
 };
