@@ -17,7 +17,6 @@ export const getReviews = async (category, sort, order) => {
       query += "&" + arr[i];
     }
   }
-  //`reviews?${category}${sort}${order}`
   const res = await renderClient.get(query);
   return res.data;
 };
@@ -49,5 +48,10 @@ export const postComment = async (review_id, postedComment, user) => {
 
 export const getCategories = async () => {
   const res = await renderClient.get("categories");
+  return res.data;
+};
+
+export const deleteComment = async (comment_id) => {
+  const res = await renderClient.delete(`comments/${comment_id}`);
   return res.data;
 };

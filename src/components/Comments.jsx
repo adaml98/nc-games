@@ -4,6 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import * as api from "../api.js";
 import { useParams } from "react-router-dom";
 import PostComment from "./PostComment.jsx";
+import DeleteComment from "./DeleteComment.jsx";
 
 const { Paragraph } = Typography;
 export default function Comments({ user }) {
@@ -11,6 +12,7 @@ export default function Comments({ user }) {
   const [comments, setComments] = useState([]);
   const { review_id } = useParams();
   const [isCommentPosted, setIsCommentPosted] = useState(false);
+  const [isCommentDeleted, setIsCommentDeleted] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -19,7 +21,7 @@ export default function Comments({ user }) {
       setIsLoading(false);
       setIsCommentPosted(false);
     });
-  }, [review_id, isCommentPosted]);
+  }, [review_id, isCommentPosted, isCommentDeleted]);
 
   if (isLoading) {
     return (
@@ -41,12 +43,18 @@ export default function Comments({ user }) {
             <li key={comment_id} style={{ textAlign: "left" }}>
               <Divider style={{ borderBlock: "10px" }} orientation="left">
                 {author}
+                <p>Likes: {votes}</p>
               </Divider>
               <p>{created_at}</p>
               <Paragraph>
                 <pre>{body}</pre>
               </Paragraph>
-              <p>Likes: {votes}</p>
+              <DeleteComment
+                user={user}
+                author={author}
+                comment_id={comment_id}
+                setIsCommentDeleted={setIsCommentDeleted}
+              />
             </li>
           );
         })}
