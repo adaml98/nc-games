@@ -20,6 +20,7 @@ export default function Comments({ user }) {
       setComments(data.comments);
       setIsLoading(false);
       setIsCommentPosted(false);
+      setIsCommentDeleted(false);
     });
   }, [review_id, isCommentPosted, isCommentDeleted]);
 

@@ -6,6 +6,7 @@ import { useParams, Link } from "react-router-dom";
 import { Breadcrumb, Layout, Col, Space, Typography, Collapse } from "antd";
 import Comments from "./Comments.jsx";
 import Likes from "./Likes.jsx";
+import Error from "./Error.jsx";
 
 const { Content } = Layout;
 const { Paragraph } = Typography;
@@ -26,16 +27,27 @@ export default function Review({ user }) {
     setReview,
   ] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { review_id } = useParams();
 
   useEffect(() => {
     setIsLoading(true);
-    api.getReview(review_id).then((data) => {
-      setReview(data.review);
-      setIsLoading(false);
-    });
+    api
+      .getReview(review_id)
+      .then((data) => {
+        setReview(data.review);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+        // console.log(err.response.data.msg);
+      });
   }, [review_id]);
 
+  if (error) {
+    // console.log(error.err.response.data.msg);
+    return <Error message={error.err.response.data.msg} />;
+  }
   if (isLoading) {
     return (
       <>

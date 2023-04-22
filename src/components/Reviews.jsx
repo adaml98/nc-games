@@ -5,23 +5,33 @@ import { LoadingOutlined, HeartTwoTone } from "@ant-design/icons";
 import { Link, useSearchParams } from "react-router-dom";
 import Categories from "./Categories.jsx";
 import SortReviews from "./SortReviews.jsx";
+import Error from "./Error.jsx";
 
 export default function Reviews() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const category = searchParams.get("category");
   const sort = searchParams.get("sort_by");
   const order = searchParams.get("order");
 
   useEffect(() => {
     setIsLoading(true);
-    api.getReviews(category, sort, order).then((data) => {
-      setReviews(data.reviews);
-      setIsLoading(false);
-    });
+    api
+      .getReviews(category, sort, order)
+      .then((data) => {
+        setReviews(data.reviews);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+      });
   }, [category, sort, order]);
 
+  if (error) {
+    return <Error message={error.err.response.data.msg} />;
+  }
   if (isLoading) {
     return (
       <>
@@ -32,7 +42,6 @@ export default function Reviews() {
       </>
     );
   }
-
   return (
     <>
       <Categories
